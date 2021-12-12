@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "554361699506",
+    "project_id": "portable-portfolio",
+    "storage_bucket": "portable-portfolio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554361699506:android:3b3132101ff6da7e11ddab",
+        "android_client_info": {
+          "package_name": "com.hossam.hasanin.portfolio_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554361699506-i3f9ok65ca0pj4q5mf9cp5jc3be6n8bt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzQWNChrubxm9MKCOFQyh36eG72q1Vt94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554361699506-i3f9ok65ca0pj4q5mf9cp5jc3be6n8bt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
