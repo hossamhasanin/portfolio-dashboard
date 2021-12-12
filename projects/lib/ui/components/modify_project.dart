@@ -172,6 +172,7 @@ class ModifyProject extends StatelessWidget {
 
   _pickImage() async {
     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
     if (image != null){
       imagePath = image.path;
       _controller.showPickedImage();

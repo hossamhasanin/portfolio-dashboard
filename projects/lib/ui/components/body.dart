@@ -9,6 +9,7 @@ import 'package:projects/logic/project_wrapper.dart';
 import 'package:projects/logic/projects_controller.dart';
 import 'package:projects/logic/usecase.dart';
 import 'package:projects/logic/viewstate.dart';
+import 'package:projects/ui/components/uploading_project_item.dart';
 import 'package:projects/ui/components/modify_project.dart';
 import 'package:projects/ui/components/project_item.dart';
 
@@ -40,13 +41,17 @@ class _BodyState extends State<Body> {
             SizeTransition(sizeFactor: animation , child: ProjectItem(
               projectWrapper: event.projectWrapper,
               goToEdit: (_)async{},
-              delete: (_){},
+              delete: (){},
             ),),
         );
       }
 
       if (event is InsertProjectToList){
-        listKey.currentState!.insertItem(event.index);
+        if (listKey.currentState != null){
+          listKey.currentState!.insertItem(event.index);
+        } else {
+          _controller.update();
+        }
       }
     });
   }
@@ -116,6 +121,25 @@ class _BodyState extends State<Body> {
             key: listKey,
             initialItemCount: _controller.viewState.projects.length,
             itemBuilder: (_ , index , animation){
+              if (_controller.viewState.projects[index].downloading){
+                return UploadingProjectItem(
+                  projectWrapper: _controller.viewState.projects[index],
+                  goToEdit: (projectWrapper) async {
+                    var results = await Get.to(ModifyProject(
+                      projectWrapper: projectWrapper,
+                    ));
+                    if (results != null){
+                      ProjectWrapper newProject = results[0];
+                      File? pickedImage = results[1];
+                      _controller.editProject(newProject, index , pickedImage);
+                    }
+                  },
+                  delete: (){
+                    deleteProject(index);
+                  },
+                  progress: _controller.uploadProgress[index]!,
+                );
+              }
               return ProjectItem(
                 projectWrapper: _controller.viewState.projects[index],
                 goToEdit: (projectWrapper) async {
@@ -128,8 +152,8 @@ class _BodyState extends State<Body> {
                     _controller.editProject(newProject, index , pickedImage);
                   }
                 },
-                delete: (project){
-                  _controller.deleteProject(index);
+                delete: (){
+                  deleteProject(index);
                 },
               );
             },
@@ -139,5 +163,28 @@ class _BodyState extends State<Body> {
         })
       ],
     );
+  }
+  
+  deleteProject(int index){
+    showDialog(context: context, builder: (_){
+      return AlertDialog(
+        title: const Text("Delete"),
+        content: const Text("Are you sure you want to delete ?"),
+        actions: [
+          ElevatedButton(
+              onPressed: (){
+                _controller.deleteProject(index);
+              },
+              child: const Text("Yes")
+          ),
+          ElevatedButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: const Text("No")
+          )
+        ],
+      );
+    });
   }
 }

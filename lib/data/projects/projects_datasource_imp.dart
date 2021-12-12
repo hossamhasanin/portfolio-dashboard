@@ -4,7 +4,9 @@ import 'package:base/base.dart';
 import 'package:base/models/project.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:portfolio_dashboard/data/projects/upload_process_imp.dart';
 import 'package:projects/logic/projects_datasource.dart';
+import 'package:projects/logic/upload_process.dart';
 
 class ProjectsDataSourceImp implements ProjectsDataSource{
 
@@ -36,20 +38,34 @@ class ProjectsDataSourceImp implements ProjectsDataSource{
   }
 
   @override
-  Future<String> uploadImage(File image) async {
-    var storageReference = _firebaseStorage
-        .ref()
-        .child('projects_images')
-        .child(DateTime.now().millisecondsSinceEpoch.toString());
+  UploadProcess uploadImage(File image) {
+      var storageReference = _firebaseStorage
+          .ref()
+          .child('projects_images')
+          .child(DateTime.now().millisecondsSinceEpoch.toString());
 
-    try {
-      await storageReference.putFile(image);
-
-      var fileURL = await storageReference.getDownloadURL();
-      return fileURL;
-    } on FirebaseException catch (e) {
-      throw DataException(e.code, e.message);
-    }
+      try {
+        return UploadProcessImp(storageReference.putFile(image), storageReference);
+      } on FirebaseException catch (e) {
+        throw DataException(e.code, e.message);
+      }
   }
+
+  // @override
+  // Future<String> uploadImage(File image) async {
+  //   var storageReference = _firebaseStorage
+  //       .ref()
+  //       .child('projects_images')
+  //       .child(DateTime.now().millisecondsSinceEpoch.toString());
+  //
+  //   try {
+  //     await storageReference.putFile(image);
+  //
+  //     var fileURL = await storageReference.getDownloadURL();
+  //     return fileURL;
+  //   } on FirebaseException catch (e) {
+  //     throw DataException(e.code, e.message);
+  //   }
+  // }
 
 }

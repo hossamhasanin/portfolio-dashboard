@@ -8,7 +8,7 @@ class ProjectItem extends StatelessWidget {
 
   final ProjectWrapper projectWrapper;
   final Future Function(ProjectWrapper) goToEdit;
-  final Function(ProjectWrapper) delete;
+  final Function() delete;
 
 
   const ProjectItem({Key? key ,
@@ -71,7 +71,7 @@ class ProjectItem extends StatelessWidget {
               }, icon: const Icon(Icons.create)),
               const SizedBox(height: 20.0,),
               IconButton(onPressed: (){
-                delete(projectWrapper);
+                delete();
               }, icon: const Icon(Icons.delete)),
             ],
           )

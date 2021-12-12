@@ -4,6 +4,7 @@ import 'package:base/base.dart';
 import 'package:projects/logic/logic_events.dart';
 import 'package:projects/logic/project_wrapper.dart';
 import 'package:projects/logic/projects_datasource.dart';
+import 'package:projects/logic/upload_process.dart';
 import 'package:projects/logic/viewstate.dart';
 
 class ProjectsUseCase {
@@ -20,10 +21,10 @@ class ProjectsUseCase {
     }
   }
 
-  Future<dynamic> addProject(File image , Project project) async{
+  Future<dynamic> addProject(Project project) async{
     try {
-      var imageUrl = await _dataSource.uploadImage(image);
-      project.image = imageUrl;
+      // var imageUrl = await _dataSource.uploadImage(image);
+      // project.image = imageUrl;
       print("add project "+project.toString());
       await _dataSource.addProject(project);
       return null;
@@ -32,12 +33,12 @@ class ProjectsUseCase {
     }
   }
 
-  Future<dynamic> updateProject(File? image , Project project) async{
+  Future<dynamic> updateProject(Project project) async{
     try {
-      if (image != null){
-        var imageUrl = await _dataSource.uploadImage(image);
-        project.image = imageUrl;
-      }
+      // if (image != null){
+      //   var imageUrl = await _dataSource.uploadImage(image);
+      //   project.image = imageUrl;
+      // }
       await _dataSource.updateProject(project);
       return null;
     } on DataException catch(e){
@@ -52,6 +53,12 @@ class ProjectsUseCase {
     } on DataException catch(e){
       return ShowErrorDialog(e.code);
     }
+  }
+
+  UploadProcess uploadImage(File image , int index){
+    var upload =  _dataSource.uploadImage(image);
+    upload.index = index;
+    return upload;
   }
 
 }
