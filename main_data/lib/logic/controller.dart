@@ -22,7 +22,10 @@ class MainDataController extends GetxController{
   PortfolioMainData entryCache = PortfolioMainData.init();
   // this map intended to cache the skill you have edited
   final Map<String, SkillWrapper> skillsEntryCache = {};
-  // final Map<String , Skill> addedSkills = {};
+  UploadProcess? _uploadCvProcess;
+  StreamSubscription<UploadData>? _uploadCvStream;
+  RxDouble uploadCvProgress = 0.0.obs;
+
 
   MainDataController(MainDataDataSource dataSource){
     _useCase = MainDataUseCase(dataSource);
@@ -91,7 +94,16 @@ class MainDataController extends GetxController{
   }
 
   doneEditingMainInfo() async{
-    if (entryCache.email == "" && entryCache.description == "" && entryCache.phone == ""){
+    if (entryCache.email == "" &&
+        entryCache.description == "" &&
+        entryCache.phone == "" &&
+        entryCache.yearsOfExperience == 0 &&
+        entryCache.location == "" &&
+        entryCache.facebookAccount == "" &&
+        entryCache.twitterAccount == "" &&
+        entryCache.githubAccount == "" &&
+        entryCache.linkedInAccount == ""
+    ){
       viewState.value = viewState.value.copy(mainInfoEditMode: false);
       return;
     }
@@ -205,8 +217,42 @@ class MainDataController extends GetxController{
     }
   }
 
+  uploadCv(File cv){
+
+    if (_uploadCvProcess != null){
+      _logicEventsController.add(ShowToast("upload-in-process"));
+      return;
+    }
+
+    viewState.value = viewState.value.copy(uploadingCv: true);
+    _uploadCvProcess = _useCase.uploadCv(cv);
+    _uploadCvStream = _uploadCvProcess!.uploadStream().listen((uploadData) {
+      uploadCvProgress.value = uploadData.transferredBytes/uploadData.totalBytes;
+    });
+    _uploadCvStream!.onData((data) async {
+      var url = await _uploadCvProcess!.getDownloadUrl();
+      print("url "+url);
+      var data = PortfolioMainData.init();
+      data.cvUrl = url;
+      await _useCase.updateCvUrl(data);
+      viewState.value = viewState.value.copy(uploadingCv: false , mainData: viewState.value.mainData.fromAnother(data));
+      uploadCvProgress.value = 0.0;
+      _uploadCvProcess = null;
+      _uploadCvStream!.cancel();
+      _uploadCvStream = null;
+    });
+    _uploadCvStream!.onError((_){
+      viewState.value = viewState.value.copy(uploadingCv: false);
+      _logicEventsController.add(ShowErrorDialog("error-in-cv-upload"));
+      _uploadCvProcess = null;
+      _uploadCvStream!.cancel();
+      _uploadCvStream = null;
+    });
+  }
+
 
   _doneEditingMainData(Function() updateViewStateOnError , Function(MainDataViewState) updateViewStateOnComplete) async {
+    print("years "+entryCache.yearsOfExperience.toString());
     _logicEventsController.add(ShowLoadingDialog());
     var result = await _useCase.saveDataEdit(viewState.value, entryCache);
     _logicEventsController.add(CloseDialogs());

@@ -38,73 +38,76 @@ class HeaderEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () async {
-                final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-                if (image != null){
-                  pickImage(File(image.path));
-                }
-              },
-              child: Container(
-                height: 120.0,
-                width: 120.0,
-                padding: const EdgeInsets.only(left: 20.0 , top: 20.0),
-                child: showPickedImage ? CircleAvatar(backgroundImage: FileImage(pickedImage)):
-                currentImage == "" ?
-                const CircleAvatar(backgroundImage: AssetImage("assets/images/person.jpg")):
-                CircleAvatar(backgroundImage: NetworkImage(currentImage),
+        Expanded(
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                  if (image != null){
+                    pickImage(File(image.path));
+                  }
+                },
+                child: Container(
+                  height: 120.0,
+                  width: 120.0,
+                  padding: const EdgeInsets.only(left: 20.0 , top: 20.0),
+                  child: showPickedImage ? CircleAvatar(backgroundImage: FileImage(pickedImage)):
+                  currentImage == "" ?
+                  const CircleAvatar(backgroundImage: AssetImage("assets/images/person.jpg")):
+                  CircleAvatar(backgroundImage: NetworkImage(currentImage),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: 200.0,
-              height: 200.0,
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 15.0,),
-                  TextField(
-                    controller: userNameController,
-                    onChanged: (text){
-                      enterName(text);
-                    },
-                    decoration: const InputDecoration(
-                      label: Text("User name" , style: TextStyle(
-                        fontSize: 18.0
-                      ),),
-                    ),
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold
-                    ),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15.0,),
+                      TextField(
+                        controller: userNameController,
+                        onChanged: (text){
+                          enterName(text);
+                        },
+                        decoration: const InputDecoration(
+                          label: Text("User name" , style: TextStyle(
+                            fontSize: 18.0
+                          ),),
+                        ),
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const SizedBox(height: 28.0,),
+                      TextField(
+                        controller: careerController,
+                        onChanged: (text){
+                          enterCareer(text);
+                        },
+                        decoration: const InputDecoration(
+                          label: Text("Career" , style: TextStyle(
+                              fontSize: 18.0
+                          ),),
+                        ),
+                        style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 28.0,),
-                  TextField(
-                    controller: careerController,
-                    onChanged: (text){
-                      enterCareer(text);
-                    },
-                    decoration: const InputDecoration(
-                      label: Text("Career" , style: TextStyle(
-                          fontSize: 18.0
-                      ),),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 10.0),

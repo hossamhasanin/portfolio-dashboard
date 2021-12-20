@@ -6,6 +6,12 @@ class MainInfo extends StatelessWidget {
   final String descriptionValue;
   final String emailValue;
   final String phoneValue;
+  final int yearsOfExperience;
+  final String location;
+  final String facebookAccount;
+  final String linkedInAccount;
+  final String githubAccount;
+  final String twitterAccount;
 
   final Function() editMode;
 
@@ -14,7 +20,13 @@ class MainInfo extends StatelessWidget {
     required this.descriptionValue,
     required this.emailValue,
     required this.phoneValue,
-    required this.editMode
+    required this.editMode,
+    required this.yearsOfExperience,
+    required this.location,
+    required this.facebookAccount,
+    required this.linkedInAccount,
+    required this.githubAccount,
+    required this.twitterAccount,
   }) : super(key: key);
 
   @override
@@ -52,7 +64,19 @@ class MainInfo extends StatelessWidget {
             const SizedBox(height: 20.0,),
             MainInfoItem(label: "Email :", value: emailValue),
             const SizedBox(height: 20.0,),
-            MainInfoItem(label: "Phone :", value: phoneValue)
+            MainInfoItem(label: "Phone :", value: phoneValue),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "Years of experience :", value: yearsOfExperience.toString()),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "Location :", value: location),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "Facebook :", value: facebookAccount),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "Twitter :", value: twitterAccount),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "Github :", value: githubAccount),
+            const SizedBox(height: 20.0,),
+            MainInfoItem(label: "LinkedIn :", value: linkedInAccount),
           ],
         ),
       ),

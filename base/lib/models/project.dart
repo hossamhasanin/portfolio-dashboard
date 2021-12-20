@@ -7,13 +7,15 @@ class Project extends Equatable{
   final String description;
   final String url;
   String? image;
+  final List<String> skills;
 
   Project({
     required this.id,
     required this.title,
     required this.description,
     required this.url,
-    required this.image
+    required this.image,
+    required this.skills
   });
 
   factory Project.empty(){
@@ -22,7 +24,8 @@ class Project extends Equatable{
         title: "",
         description: "",
         url: "",
-        image: ""
+        image: "",
+        skills: const []
     );
   }
 
@@ -32,7 +35,8 @@ class Project extends Equatable{
     title,
     url,
     description,
-    image
+    image,
+    skills
   ];
 
   Map<String , dynamic> toMap(){
@@ -41,7 +45,8 @@ class Project extends Equatable{
       "title" : title,
       "description" : description,
       "url" : url,
-      "image" : image
+      "image" : image,
+      "skills": skills
     };
   }
 
@@ -51,7 +56,8 @@ class Project extends Equatable{
         title: map["title"],
         description: map["description"],
         url: map["url"],
-        image: map["image"]
+        image: map["image"],
+        skills: (map["skills"] as List<dynamic>).cast<String>(),
     );
   }
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:base/models/project.dart';
-import 'package:projects/logic/upload_process.dart';
+import 'package:base/upload_process.dart';
 abstract class ProjectsDataSource{
   Future<List<Project>> getProjects();
   Future addProject(Project project);

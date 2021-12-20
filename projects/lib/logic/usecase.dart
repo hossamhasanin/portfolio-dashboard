@@ -4,7 +4,7 @@ import 'package:base/base.dart';
 import 'package:projects/logic/logic_events.dart';
 import 'package:projects/logic/project_wrapper.dart';
 import 'package:projects/logic/projects_datasource.dart';
-import 'package:projects/logic/upload_process.dart';
+import 'package:base/upload_process.dart';
 import 'package:projects/logic/viewstate.dart';
 
 class ProjectsUseCase {

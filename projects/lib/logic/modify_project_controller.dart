@@ -5,21 +5,53 @@ import 'package:projects/logic/modify_projects_viewstate.dart';
 import 'project_wrapper.dart';
 
 class ModifyProjectController extends GetxController{
-  final Rx<ModifyProjectsViewState> viewState = ModifyProjectsViewState.init().obs;
+  ModifyProjectsViewState viewState = ModifyProjectsViewState.init();
 
   checkIfPassedProject(ProjectWrapper? projectWrapper){
     if (projectWrapper != null){
       if (projectWrapper.pickedImage != null){
-        viewState.value = viewState.value.copy(projectImageCases: ProjectImageCases.PICKED);
+        viewState = viewState.copy(projectImageCases: ProjectImageCases.PICKED);
       } else {
-        viewState.value = viewState.value.copy(projectImageCases: ProjectImageCases.NETWORK);
+        viewState = viewState.copy(projectImageCases: ProjectImageCases.NETWORK);
       }
     } else {
-      viewState.value = viewState.value.copy(projectImageCases: ProjectImageCases.ASSETS);
+      viewState = viewState.copy(projectImageCases: ProjectImageCases.ASSETS);
     }
+    update();
+  }
+
+  setSkills(List<String> skills){
+    viewState = viewState.copy(skills: skills);
+    update();
+  }
+
+  enterSkill(int index , String skill){
+    var skills = viewState.skills;
+    skills[index] = skill;
+    viewState = viewState.copy(skills: skills);
+  }
+
+  addNewSkill(){
+    var skills = viewState.skills;
+    if (skills.isNotEmpty){
+      if (skills.last == ""){
+        return;
+      }
+    }
+    skills.add("");
+    viewState = viewState.copy(skills: skills);
+    update();
+  }
+
+  deleteSkill(int index){
+    var skills = viewState.skills;
+    skills.removeAt(index);
+    viewState = viewState.copy(skills: skills);
+    update();
   }
 
   showPickedImage(){
-    viewState.value = viewState.value.copy(projectImageCases: ProjectImageCases.PICKED);
+    viewState = viewState.copy(projectImageCases: ProjectImageCases.PICKED);
+    update();
   }
 }

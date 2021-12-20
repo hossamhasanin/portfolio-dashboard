@@ -4,9 +4,9 @@ import 'package:base/base.dart';
 import 'package:base/models/project.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:portfolio_dashboard/data/projects/upload_process_imp.dart';
+import 'package:portfolio_dashboard/data/upload_process/upload_process_imp.dart';
 import 'package:projects/logic/projects_datasource.dart';
-import 'package:projects/logic/upload_process.dart';
+import 'package:base/upload_process.dart';
 
 class ProjectsDataSourceImp implements ProjectsDataSource{
 

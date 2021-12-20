@@ -16,6 +16,14 @@ class ShowSkillsDoneMessage extends MainDataLogicEvent{
   List<Object?> get props => [skillsOperationMessage];
 }
 class CloseDialogs extends MainDataLogicEvent{}
+class ShowToast extends MainDataLogicEvent{
+  final String message;
+
+  ShowToast(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
 class ShowErrorDialog extends MainDataLogicEvent{
   final String error;
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:main_data/logic/controller.dart';
 import 'package:main_data/logic/logic_events.dart';
+import 'package:main_data/ui/components/cv.dart';
 import 'package:main_data/ui/components/edit/main_info_edit.dart';
 import 'package:main_data/ui/components/main_info.dart';
 import 'package:main_data/ui/components/projects.dart';
@@ -127,6 +128,10 @@ class _BodyState extends State<Body> {
         Get.snackbar("Skills", _viewSkillsOperationMessage(event.skillsOperationMessage));
       }
 
+      if (event is ShowToast){
+        Get.snackbar("Upload process", _viewErrorMessage(event.message));
+      }
+
       if (event is CloseDialogs){
         if (_dialogContext != null){
           Navigator.pop(_dialogContext!);
@@ -198,6 +203,12 @@ class _BodyState extends State<Body> {
                   descriptionValue: viewState.mainData.description!,
                   emailValue: viewState.mainData.email!,
                   phoneValue: viewState.mainData.phone!,
+                  yearsOfExperience: viewState.mainData.yearsOfExperience!,
+                  location: viewState.mainData.location!,
+                  facebookAccount: viewState.mainData.facebookAccount!,
+                  twitterAccount: viewState.mainData.twitterAccount!,
+                  linkedInAccount: viewState.mainData.linkedInAccount!,
+                  githubAccount: viewState.mainData.githubAccount!,
                   descriptionChanged: (description){
                     _controller.entryCache.description = description;
                   },
@@ -207,7 +218,25 @@ class _BodyState extends State<Body> {
                   phoneChanged: (phone){
                     _controller.entryCache.phone = phone;
                   },
-                  doneEditing: (){
+                  yearsOfExperienceChanged: (years){
+                    _controller.entryCache.yearsOfExperience = years;
+                  },
+                  locationChanged: (location){
+                    _controller.entryCache.location = location;
+                  },
+                  facebookAccountChanged: (account){
+                    _controller.entryCache.facebookAccount = account;
+                  },
+                  twitterAccountChanged: (account){
+                    _controller.entryCache.twitterAccount = account;
+                  },
+                  linkedInAccountChanged: (account){
+                    _controller.entryCache.linkedInAccount = account;
+                  },
+                  githubAccountChanged: (account){
+                    _controller.entryCache.githubAccount = account;
+                  },
+                doneEditing: (){
                     _controller.doneEditingMainInfo();
                   },
                   );
@@ -216,6 +245,12 @@ class _BodyState extends State<Body> {
                 descriptionValue: viewState.mainData.description!,
                 emailValue: viewState.mainData.email!,
                 phoneValue: viewState.mainData.phone!,
+                yearsOfExperience: viewState.mainData.yearsOfExperience!,
+                location: viewState.mainData.location!,
+                facebookAccount: viewState.mainData.facebookAccount!,
+                twitterAccount: viewState.mainData.twitterAccount!,
+                linkedInAccount: viewState.mainData.linkedInAccount!,
+                githubAccount: viewState.mainData.githubAccount!,
                 editMode: (){
                   _controller.editMainInfo();
                 },
@@ -238,6 +273,17 @@ class _BodyState extends State<Body> {
               projectsNumber: viewState.projectsNumber,
               likesNumber: viewState.likesNumber,
             );
+          }),
+          Obx((){
+            var viewState = _controller.viewState.value;
+            return Cv(
+                uploading: viewState.uploadingCv,
+                cvUrl: viewState.mainData.cvUrl!,
+                uploadCv: (cvFile){
+                  _controller.uploadCv(cvFile);
+                },
+                uploadProgress: _controller.uploadCvProgress.value
+            );
           })
         ],
       ),
@@ -248,6 +294,12 @@ class _BodyState extends State<Body> {
     switch(errorCode){
       case "network-request-failed":{
         return "No internet";
+      }
+      case "error-in-cv-upload":{
+        return "Error while cv uploading please try again later";
+      }
+      case "upload-in-process":{
+        return "Hey buddy there is upload already in process";
       }
       default:{
         throw "Error code not defined";

@@ -5,6 +5,7 @@ import 'package:base/models/portfolio_main_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:main_data/logic/main_data_datasource.dart';
+import 'package:portfolio_dashboard/data/upload_process/upload_process_imp.dart';
 
 class MainDataDataSourceImp implements MainDataDataSource{
 
@@ -61,6 +62,20 @@ class MainDataDataSourceImp implements MainDataDataSource{
     var query = _fireStore.collection(SKILLS_COLLECTION).doc(skill.id);
 
     return query.delete();
+  }
+
+  @override
+  UploadProcess uploadCv(File cv) {
+    var storageReference = _firebaseStorage
+        .ref()
+        .child('cvs')
+        .child(DateTime.now().millisecondsSinceEpoch.toString());
+
+    try {
+      return UploadProcessImp(storageReference.putFile(cv), storageReference);
+    } on FirebaseException catch (e) {
+      throw DataException(e.code, e.message);
+    }
   }
 
 }

@@ -7,6 +7,12 @@ class PortfolioMainData extends Equatable{
   String? description;
   String? email;
   String? phone;
+  String? cvUrl;
+  String? location;
+  String? facebookAccount;
+  String? twitterAccount;
+  String? githubAccount;
+  String? linkedInAccount;
   int? yearsOfExperience;
 
   PortfolioMainData({
@@ -16,7 +22,13 @@ class PortfolioMainData extends Equatable{
     required this.email,
     required this.description,
     required this.yearsOfExperience,
-    required this.ownerImage
+    required this.ownerImage,
+    required this.cvUrl,
+    required this.location,
+    required this.facebookAccount,
+    required this.twitterAccount,
+    required this.githubAccount,
+    required this.linkedInAccount,
   });
 
   factory PortfolioMainData.init(){
@@ -27,7 +39,13 @@ class PortfolioMainData extends Equatable{
         ownerImage: "",
         yearsOfExperience: 0,
         email: "",
-        phone: ""
+        phone: "",
+        cvUrl: "",
+        location: "",
+        facebookAccount: "",
+        githubAccount: "",
+        linkedInAccount: "",
+        twitterAccount: "",
     );
   }
 
@@ -39,7 +57,13 @@ class PortfolioMainData extends Equatable{
         ownerImage: "",
         yearsOfExperience: 0,
         email: "",
-        phone: ""
+        phone: "",
+        cvUrl: "",
+        location: "",
+        facebookAccount: "",
+        githubAccount: "",
+        linkedInAccount: "",
+        twitterAccount: "",
     );
   }
 
@@ -51,18 +75,31 @@ class PortfolioMainData extends Equatable{
         email: portfolioMainData.email != "" ? portfolioMainData.email : email,
         description: portfolioMainData.description != "" ? portfolioMainData.description : description,
         yearsOfExperience: portfolioMainData.yearsOfExperience != 0 ? portfolioMainData.yearsOfExperience : yearsOfExperience,
-        ownerImage: portfolioMainData.ownerImage != "" ? portfolioMainData.ownerImage : ownerImage);
+        ownerImage: portfolioMainData.ownerImage != "" ? portfolioMainData.ownerImage : ownerImage,
+        cvUrl: portfolioMainData.cvUrl != "" ? portfolioMainData.cvUrl : cvUrl,
+        location: portfolioMainData.location != "" ? portfolioMainData.location : location,
+        facebookAccount: portfolioMainData.facebookAccount != "" ? portfolioMainData.facebookAccount : facebookAccount,
+        twitterAccount: portfolioMainData.twitterAccount != "" ? portfolioMainData.twitterAccount : twitterAccount,
+        githubAccount: portfolioMainData.githubAccount != "" ? portfolioMainData.githubAccount : githubAccount,
+        linkedInAccount: portfolioMainData.linkedInAccount != "" ? portfolioMainData.linkedInAccount : linkedInAccount,
+    );
   }
 
   static PortfolioMainData fromMap(Map<String , dynamic> map){
     return PortfolioMainData(
-        ownerName: map["ownerName"],
-        ownerImage: map["ownerImage"],
-        career: map["career"],
-        description: map["description"],
-        yearsOfExperience: map["yearsOfExperience"],
-        email: map["email"],
-        phone: map["phone"]
+        ownerName: map["ownerName"] ?? "",
+        ownerImage: map["ownerImage"] ?? "",
+        career: map["career"] ?? "",
+        description: map["description"] ?? "",
+        yearsOfExperience: map["yearsOfExperience"] ?? 0,
+        email: map["email"] ?? "",
+        phone: map["phone"] ?? "",
+        cvUrl: map["cvUrl"] ?? "",
+        location: map["location"] ?? "",
+        facebookAccount: map["facebookAccount"] ?? "",
+        githubAccount: map["githubAccount"] ?? "",
+        linkedInAccount: map["linkedInAccount"] ?? "",
+        twitterAccount: map["twitterAccount"] ?? "",
     );
   }
 
@@ -75,6 +112,12 @@ class PortfolioMainData extends Equatable{
       "yearsOfExperience" : yearsOfExperience,
       "email" : email,
       "phone" : phone,
+      "cvUrl" : cvUrl,
+      "location" : location,
+      "facebookAccount" : facebookAccount,
+      "githubAccount" : githubAccount,
+      "linkedInAccount" : linkedInAccount,
+      "twitterAccount" : twitterAccount,
     };
   }
 
@@ -85,6 +128,12 @@ class PortfolioMainData extends Equatable{
     description,
     yearsOfExperience,
     email,
-    phone
+    phone,
+    cvUrl,
+    location,
+    facebookAccount,
+    githubAccount,
+    linkedInAccount,
+    twitterAccount,
   ];
 }

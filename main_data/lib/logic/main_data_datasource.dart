@@ -9,4 +9,5 @@ abstract class MainDataDataSource{
   Future updateSkill(Skill skill);
   Future<Skill> addSkill(Skill skill);
   Future deleteSkill(Skill skill);
+  UploadProcess uploadCv(File cv);
 }

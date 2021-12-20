@@ -1,4 +1,4 @@
-import 'package:projects/logic/upload_data.dart';
+import 'package:base/upload_data.dart';
 
 abstract class UploadProcess{
   int index;

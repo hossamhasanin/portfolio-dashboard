@@ -6,8 +6,8 @@ import 'package:base/base.dart';
 import 'package:get/get.dart';
 import 'package:projects/logic/logic_events.dart';
 import 'package:projects/logic/projects_datasource.dart';
-import 'package:projects/logic/upload_data.dart';
-import 'package:projects/logic/upload_process.dart';
+import 'package:base/upload_data.dart';
+import 'package:base/upload_process.dart';
 import 'package:projects/logic/usecase.dart';
 import 'package:projects/logic/viewstate.dart';
 
@@ -144,7 +144,9 @@ class ProjectsController extends GetxController{
      var projects = viewState.projects;
      var oldProject = projects[index];
      projectWrapper.pickedImage = image;
-     projectWrapper.downloading = true;
+     if (image != null){
+       projectWrapper.downloading = true;
+     }
      projects.removeAt(index);
      projects.insert(index, projectWrapper);
      viewState = viewState.copy(projects: projects);

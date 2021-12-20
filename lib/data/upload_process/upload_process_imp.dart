@@ -1,7 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:projects/logic/upload_data.dart';
-import 'package:projects/logic/upload_process.dart';
-import 'package:projects/logic/upload_data.dart';
+import 'package:base/upload_process.dart';
+import 'package:base/upload_data.dart';
+
 class UploadProcessImp implements UploadProcess{
 
   final UploadTask _uploadTask;

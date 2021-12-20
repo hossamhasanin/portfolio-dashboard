@@ -82,5 +82,16 @@ class MainDataUseCase{
     return skills;
   }
 
+  UploadProcess uploadCv(File cv){
+    return _dataSource.uploadCv(cv);
+  }
+
+  Future<dynamic> updateCvUrl(PortfolioMainData portfolioMainData) async {
+    try {
+      await _dataSource.updateMainData(portfolioMainData);
+    } on DataException catch(e){
+      return ShowErrorDialog(e.code);
+    }
+  }
 
 }

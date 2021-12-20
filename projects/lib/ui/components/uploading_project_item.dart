@@ -36,58 +36,77 @@ class UploadingProjectItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 200.0,
-                    width: 100.0,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: projectWrapper.pickedImage != null ? Image.file(
-                              projectWrapper.pickedImage! ,
-                              height: 200.0,
-                              width: 100.0,
-                              fit: BoxFit.fill
-                          ) : Image.network(
-                              projectWrapper.project.image! ,
-                              height: 200.0,
-                              width: 100.0,
-                              fit: BoxFit.fill
-                          ),
-                        ),
-                        Container(
-                          height: 200.0,
-                          width: 100.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.8),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 200.0,
+                      width: 100.0,
+                      child: Stack(
+                        children: [
+                          ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: progress.value,
-                              valueColor: const AlwaysStoppedAnimation(Colors.white),
+                            child: projectWrapper.pickedImage != null ? Image.file(
+                                projectWrapper.pickedImage! ,
+                                height: 200.0,
+                                width: 100.0,
+                                fit: BoxFit.fill
+                            ) : Image.network(
+                                projectWrapper.project.image! ,
+                                height: 200.0,
+                                width: 100.0,
+                                fit: BoxFit.fill
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            height: 200.0,
+                            width: 100.0,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                value: progress.value,
+                                valueColor: const AlwaysStoppedAnimation(Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 20.0,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(projectWrapper.project.title , style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18
-                      ),),
-                      Text(projectWrapper.project.description , maxLines: 3,),
-                      OutlinedButton(onPressed: (){}, child:const Text("Visit") )
-                    ],
-                  )
-                ],
+                    const SizedBox(width: 20.0,),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 18.0),
+                            child: Text(projectWrapper.project.title , style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 18.0),
+                            child: Text(projectWrapper.project.description , maxLines: 3,),
+                          ),
+                          Expanded(
+                            child: Wrap(
+                              spacing: 10.0,
+                              alignment: WrapAlignment.start,
+                              children: projectWrapper.project.skills.map((skill) => Chip(
+                                  label: Text(skill))).toList(),
+                            ),
+                          ),
+                          OutlinedButton(onPressed: (){}, child:const Text("Visit") )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               Column(
                 children: [

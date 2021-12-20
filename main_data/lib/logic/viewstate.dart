@@ -12,6 +12,7 @@ class MainDataViewState{
   final bool showPickedImage;
   final bool headerEditMode;
   final bool mainInfoEditMode;
+  final bool uploadingCv;
 
   MainDataViewState({
     required this.mainData,
@@ -21,7 +22,8 @@ class MainDataViewState{
     required this.headerEditMode,
     required this.pickedImage,
     required this.showPickedImage,
-    required this.mainInfoEditMode
+    required this.mainInfoEditMode,
+    required this.uploadingCv,
   });
 
   factory MainDataViewState.init(){
@@ -33,7 +35,8 @@ class MainDataViewState{
       mainInfoEditMode: false,
       skills: [],
       projectsNumber: 0,
-      likesNumber: 0
+      likesNumber: 0,
+      uploadingCv: false,
     );
   }
 
@@ -45,7 +48,8 @@ class MainDataViewState{
     bool? mainInfoEditMode,
     List<SkillWrapper>? skills,
     int? projectsNumber,
-    int? likesNumber
+    int? likesNumber,
+    bool? uploadingCv,
   }){
     return MainDataViewState(
         mainData: mainData ?? this.mainData,
@@ -55,7 +59,8 @@ class MainDataViewState{
         mainInfoEditMode: mainInfoEditMode ?? this.mainInfoEditMode,
         skills: skills ?? this.skills,
         likesNumber: likesNumber ?? this.likesNumber,
-        projectsNumber: projectsNumber ?? this.projectsNumber
+        projectsNumber: projectsNumber ?? this.projectsNumber,
+        uploadingCv: uploadingCv ?? this.uploadingCv,
     );
   }
 }

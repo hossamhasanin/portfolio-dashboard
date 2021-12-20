@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:base/base.dart';
 import 'package:flutter/material.dart';
 import 'package:projects/logic/project_wrapper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectItem extends StatelessWidget {
 
@@ -19,7 +20,7 @@ class ProjectItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 220.0,
+      height: 270.0,
       margin: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -33,43 +34,64 @@ class ProjectItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: projectWrapper.pickedImage != null ? Image.file(
-                    projectWrapper.pickedImage! ,
-                    height: 200.0,
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: projectWrapper.pickedImage != null ? Image.file(
+                      projectWrapper.pickedImage! ,
+                      height: 250.0,
+                      width: 100.0,
+                      fit: BoxFit.fill
+                  ) : Image.network(
+                    projectWrapper.project.image! ,
+                    height: 250.0,
                     width: 100.0,
                     fit: BoxFit.fill
-                ) : Image.network(
-                  projectWrapper.project.image! ,
-                  height: 200.0,
-                  width: 100.0,
-                  fit: BoxFit.fill
+                  ),
                 ),
-              ),
-              const SizedBox(width: 20.0,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(projectWrapper.project.title , style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18
-                  ),),
-                  Text(projectWrapper.project.description , maxLines: 3,),
-                  OutlinedButton(onPressed: (){}, child:const Text("Visit") )
-                ],
-              )
-            ],
+                const SizedBox(width: 20.0,),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 18.0),
+                        child: Text(projectWrapper.project.title , style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 18.0),
+                        child: Text(projectWrapper.project.description , maxLines: 3,),
+                      ),
+                      Expanded(
+                        child: Wrap(
+                          spacing: 10.0,
+                          alignment: WrapAlignment.start,
+                          children: projectWrapper.project.skills.map((skill) => Chip(
+                              label: Text(skill))).toList(),
+                        ),
+                      ),
+                      OutlinedButton(onPressed: (){
+                        _launchURL(projectWrapper.project.url);
+                      }, child:const Text("Visit") )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
           Column(
             children: [
               IconButton(onPressed: ()async{
                 await goToEdit(projectWrapper);
               }, icon: const Icon(Icons.create)),
-              const SizedBox(height: 20.0,),
+              const SizedBox(height: 10.0,),
               IconButton(onPressed: (){
                 delete();
               }, icon: const Icon(Icons.delete)),
@@ -78,5 +100,9 @@ class ProjectItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _launchURL(String url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
   }
 }
