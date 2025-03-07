@@ -1,16 +1,9 @@
-# portfolio_dashboard
+# Portable Portfolio
 
-The dashboard of portable portfolio
+Portable Portfolio is a flutter project that enables you to have a portfolio in just a few clicks. It gives you the full control through an app dashboard to manage your displayed projects and information.
 
-## Getting Started
+## Portfolio Website
+<img src="https://github.com/hossamhasanin/portable-portfolio/blob/master/images/web%201.png" width="45%" height="70%"/> <img src="https://github.com/hossamhasanin/portable-portfolio/blob/master/images/web%202.png" width="45%" height="70%"/> <img src="https://github.com/hossamhasanin/portable-portfolio/blob/master/images/web%203.png" width="45%" height="70%"/>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dashboard app
+<img src="https://github.com/hossamhasanin/portable-portfolio/blob/master/images/app%201.jpeg" width="30%" height="40%" hspace="20"/> <img src="https://github.com/hossamhasanin/portable-portfolio/blob/master/images/app%202.jpeg" width="30%" height="40%"/>
