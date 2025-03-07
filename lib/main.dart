@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/ui/login_screen.dart';
 import 'package:main_data/ui/main_data_screen.dart';
+import 'package:portfolio_dashboard/firebase_options.dart';
 import 'package:projects/ui/projects_screen.dart';
 import 'package:splash/ui/splash_screen.dart';
 
@@ -16,7 +17,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -46,6 +49,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.hasError){
+            print(snapshot.error);
             return Scaffold(
               body: Center(
                 child: Text(snapshot.error.toString()),
